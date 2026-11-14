@@ -10,7 +10,7 @@ class StadtSzene extends Phaser.Scene {
         this.richtungX = 0;
         this.richtungY = 0;
         this.maxZug = 50;
-        this.tempo = 50;
+        this.tempo = 30;
         this.input.on("pointerdown", (pointer) => {
             this.startX = pointer.x;
             this.startY = pointer.y;
