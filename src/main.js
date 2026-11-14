@@ -9,6 +9,8 @@ class StadtSzene extends Phaser.Scene {
         this.spieler = this.add.rectangle(180, 320, 16, 24, 0x00ff03);
         this.richtungX = 0;
         this.richtungY = 0;
+        this.maxZug = 50;
+        this.tempo = 0.5;
         this.input.on("pointerdown", (pointer) => {
             this.startX = pointer.x;
             this.startY = pointer.y;
@@ -17,11 +19,18 @@ class StadtSzene extends Phaser.Scene {
 
         this.input.on("pointermove", (pointer) => {
             if (pointer.isDown) {
-                const dx = pointer.x - this.startX;
-                const dy = pointer.y - this.startY;
-                this.richtungX = dx;
-                this.richtungY = dy;
-                console.log("dx:", dx, "dy:", dy);
+                this.dx = pointer.x - this.startX;
+                this.dy = pointer.y - this.startY;
+                const laenge = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+
+                if (laenge > this.maxZug) {
+                    this.dx = this.dx / laenge * this.maxZug;
+                    this.dy = this.dy / laenge * this.maxZug;
+                }
+
+                this.richtungX = this.dx / this.maxZug;
+                this.richtungY = this.dy / this.maxZug;
+                console.log("dx:", this.dx, "dy:", this.dy);
             }
         });
 
@@ -32,8 +41,11 @@ class StadtSzene extends Phaser.Scene {
         });
     }
     update() {
-        this.spieler.x += this.richtungX * 0.02;
-        this.spieler.y += this.richtungY * 0.02;
+        this.spieler.x += this.richtungX * this.tempo;
+        this.spieler.y += this.richtungY * this.tempo;
+        const dx = this.spieler.x - this.startX;
+        const dy = this.spieler.y - this.startY;
+
     }
 
 }
