@@ -10,7 +10,7 @@ class StadtSzene extends Phaser.Scene {
         this.richtungX = 0;
         this.richtungY = 0;
         this.maxZug = 50;
-        this.tempo = 0.5;
+        this.tempo = 120;
         this.input.on("pointerdown", (pointer) => {
             this.startX = pointer.x;
             this.startY = pointer.y;
@@ -40,9 +40,9 @@ class StadtSzene extends Phaser.Scene {
             this.richtungY = 0;
         });
     }
-    update() {
-        this.spieler.x += this.richtungX * this.tempo;
-        this.spieler.y += this.richtungY * this.tempo;
+    update(time, delta) {
+        this.spieler.x += this.richtungX * this.tempo * delta / 8.3333;
+        this.spieler.y += this.richtungY * this.tempo * delta / 8.3333;
 
     }
 
