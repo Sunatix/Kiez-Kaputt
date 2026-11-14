@@ -19,18 +19,18 @@ class StadtSzene extends Phaser.Scene {
 
         this.input.on("pointermove", (pointer) => {
             if (pointer.isDown) {
-                this.dx = pointer.x - this.startX;
-                this.dy = pointer.y - this.startY;
-                const laenge = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+                let dx = pointer.x - this.startX;
+                let dy = pointer.y - this.startY;
+                const laenge = Math.sqrt(dx * dx + dy * dy);
 
                 if (laenge > this.maxZug) {
-                    this.dx = this.dx / laenge * this.maxZug;
-                    this.dy = this.dy / laenge * this.maxZug;
+                    dx = dx / laenge * this.maxZug;
+                    dy = dy / laenge * this.maxZug;
                 }
 
-                this.richtungX = this.dx / this.maxZug;
-                this.richtungY = this.dy / this.maxZug;
-                console.log("dx:", this.dx, "dy:", this.dy);
+                this.richtungX = dx / this.maxZug;
+                this.richtungY = dy / this.maxZug;
+                console.log("dx:", dx, "dy:", dy);
             }
         });
 
@@ -43,8 +43,6 @@ class StadtSzene extends Phaser.Scene {
     update() {
         this.spieler.x += this.richtungX * this.tempo;
         this.spieler.y += this.richtungY * this.tempo;
-        const dx = this.spieler.x - this.startX;
-        const dy = this.spieler.y - this.startY;
 
     }
 
